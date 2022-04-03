@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>        
+        <script src="https://www.gstatic.com/firebasejs/6.3.4/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-database.js"></script>
+        <script>
+          var firebaseConfig = {
+            apiKey: "AIzaSyDXKAkvjpRIw0QvoG3l-QfqdN10rIs0-_0",
+            authDomain: "time-capsule-1.firebaseapp.com",
+            databaseURL: "https://time-capsule-1-default-rtdb.firebaseio.com",
+            projectId: "time-capsule-1",
+            storageBucket: "time-capsule-1.appspot.com",
+            messagingSenderId: "775954139303",
+            appId: "1:775954139303:web:913fd1e3454d4e4e82b382"
+            };
+          // Initialize Firebase
+          firebase.initializeApp(firebaseConfig);
+    
+        </script>
+
+    <base href="https://neelng7.github.io/predictions/">
+    <link href="styles.css" rel="stylesheet"/>
+        <script src="modify.js" defer></script>
+        <script src="reportProblem.js" defer></script>
+
+        <title id="title">Sign in - Predictions</title>
+        <link class="link" rel="icon" href="images/Logo.png" type="image/icon type">
+
+    </head>
+<body>
+    <header id="portrait" class="hide"><br><br>....
+        <button onclick="dropdown()" id="dropdown"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="list-ul" role="img" 
+            style="height:25px;width:25px;"xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-list-ul 
+            fa-lg"><path fill="currentColor" d="M16 96C16 69.49 37.49 48 64 48C90.51 48 112 69.49 112 96C112 122.5 90.51 144 64 144C37.49 
+            144 16 122.5 16 96zM480 64C497.7 64 512 78.33 512 96C512 113.7 497.7 128 480 128H192C174.3 128 160 113.7 160 96C160 78.33 174.3 
+            64 192 64H480zM480 224C497.7 224 512 238.3 512 256C512 273.7 497.7 288 480 288H192C174.3 288 160 273.7 160 256C160 238.3 174.3 224 
+            192 224H480zM480 384C497.7 384 512 398.3 512 416C512 433.7 497.7 448 480 448H192C174.3 448 160 433.7 160 416C160 398.3 174.3 384 
+            192 384H480zM16 416C16 389.5 37.49 368 64 368C90.51 368 112 389.5 112 416C112 442.5 90.51 464 64 464C37.49 464 16 442.5 16 416zM112 
+            256C112 282.5 90.51 304 64 304C37.49 304 16 282.5 16 256C16 229.5 37.49 208 64 208C90.51 208 112 229.5 112 256z" ></path></svg></button>
+        <b>Predictions</b><br>. <br>.
+    </header> 
+        <header id="landscape">
+            <h1 id="h1main">Predictions</h1>
+            <a title="About" href="about.html">About</a>........
+            <a title="Search" href="search.html">Search</a>........
+            <a title="Checkout" href="">Checkout</a>........
+            <a title="New Prediction" href="new-prediction.html">New Prediction</a>........
+            <a title="Sign In" class="selected" href="modify-prediction.html">Sign In</a>........
+            <a title="Report Problem" onclick="fnScroll()">&#x2691;</a><br>.
+        </div>
+        </header><br><br><br><br><br><br>
+        <div class="progress-bar hide" data-progress></div>
+        <div id="dropdown-menu" class="hide">
+            <ul><br>
+                <a href='about.html'><li>About</li></a>
+                <a href="search.html"><li>Search</li></a>
+                <a href=""><li>Checkout</li></a>
+                <a href="new-prediction.html"><li>New Prediction</li></a>
+                <a href="modify-prediction.html"><li>Sign In</li></a>
+                <li onclick="fnScroll();">Report a Problem &#x2691;</li>
+            </ul>
+        </div>
+
+<main id="main">
+    <h1 id="SignInTitle">Sign In</h1>
+    <p id="modifyPara">Sign in to modify your prediction<br></p>
+    <form id="mainForm">
+        <div>
+            <label for="username_modify">Username: </label>
+            <input type="text" name="username" id="username_modify" placeholder="username" required>
+        </div>
+        <div>
+           ......<label for="pass_modify">Password: </label>.
+            <input type="password" id="pass_modify" placeholder="password" required>
+            <i class="fa-solid fa-eye" id="showPassword" onclick="showPassword()"></i>
+        </div>
+        <div>
+            <label for="fname_modify">First Name: </label>
+            <input type="text" id="fname_modify" name="First Name" placeholder="first name" required>
+        </div>
+        <div>
+            <label for="lname_modify">Last Name: </label> 
+            <input type="text" id="lname_modify" name="Last Name" placeholder="last name" required>
+        </div>
+        <div>
+            <button type="reset" value="Reset" onclick="window.location.href='modify-prediction.html'" class="btn">Reset</button>
+            <button type="button" onclick="verifyData()" id="enter_btn_check" data-btn class="btn">Sign In</button>
+        </div>
+    </form>
+
+
+    <div id="mainDiv" class="hide">
+        <div>
+            <span id="modifyUsername"></span><br><br>
+            <span id="modifypasword"></span><br><br>
+            <span id="modifyFirstName"></span><br><br>
+            <span id="modifyLastName"></span><br><br>
+            <span id="predictionType"></span><br>
+            <p id="modifyInitialDate"></p>
+            <p id="modifyFileRequest" style="color:red;"></p>
+        </div>
+        <div>
+            <textarea id="mainprediction" disabled  cols="45" rows="6"></textarea><br>
+        </div>
+        <div><label for="copyLink">Copy Shareable link</label>
+            <button id="copyLink" title="Copy" class="btn">Copy <i class="fa-solid fa-copy"></i></button>
+        </div>
+        <fieldset><legend>Editing options</legend><br></fieldset>
+        <div>
+            <label for="modifyReleaseDate">Change Release Date</label>
+            <input type="date" id="modifyReleaseDate">
+        </div>
+        <div>
+            <label for="modifyReleaseTime">Change Release Time</label>
+            <input type="time" id="modifyReleaseTime">
+        </div>
+        <div>
+            <label for="selectTimezone">Select Timezone: </label>......
+            <select id="selectTimezone2">
+            <!-- <option value="">Choose Timezone</option> -->
+            <option id="dbTimezone"></option>
+            <option id="LocalTimezone"></option>
+            <option value="Pacific/Midway">(GMT-11:00) Midway Island, Samoa</option>
+            <option value="America/Adak">(GMT-10:00) Hawaii-Aleutian</option>
+            <option value="Etc/GMT+10">(GMT-10:00) Hawaii</option>
+            <option value="Pacific/Marquesas">(GMT-09:30) Marquesas Islands</option>
+            <option value="Pacific/Gambier">(GMT-09:00) Gambier Islands</option>
+            <option value="America/Anchorage">(GMT-09:00) Alaska</option>
+            <option value="America/Ensenada">(GMT-08:00) Tijuana, Baja California</option>
+            <option value="Etc/GMT+8">(GMT-08:00) Pitcairn Islands</option>
+            <option value="America/Los_Angeles">(GMT-08:00) Pacific Time (US & Canada)</option>
+            <option value="America/Denver">(GMT-07:00) Mountain Time (US & Canada)</option>
+            <option value="America/Chihuahua">(GMT-07:00) Chihuahua, La Paz, Mazatlan</option>
+            <option value="America/Dawson_Creek">(GMT-07:00) Arizona</option>
+            <option value="America/Belize">(GMT-06:00) Saskatchewan, Central America</option>
+            <option value="America/Cancun">(GMT-06:00) Guadalajara, Mexico City, Monterrey</option>
+            <option value="Chile/EasterIsland">(GMT-06:00) Easter Island</option>
+            <option value="America/Chicago">(GMT-06:00) Central Time (US & Canada)</option>
+            <option value="America/New_York">(GMT-05:00) Eastern Time (US & Canada)</option>
+            <option value="America/Havana">(GMT-05:00) Cuba</option>
+            <option value="America/Bogota">(GMT-05:00) Bogota, Lima, Quito, Rio Branco</option>
+            <option value="America/Caracas">(GMT-04:30) Caracas</option>
+            <option value="America/Santiago">(GMT-04:00) Santiago</option>
+            <option value="America/La_Paz">(GMT-04:00) La Paz</option>
+            <option value="Atlantic/Stanley">(GMT-04:00) Faukland Islands</option>
+            <option value="America/Campo_Grande">(GMT-04:00) Brazil</option>
+            <option value="America/Goose_Bay">(GMT-04:00) Atlantic Time (Goose Bay)</option>
+            <option value="America/Glace_Bay">(GMT-04:00) Atlantic Time (Canada)</option>
+            <option value="America/St_Johns">(GMT-03:30) Newfoundland</option>
+            <option value="America/Araguaina">(GMT-03:00) UTC-3</option>
+            <option value="America/Montevideo">(GMT-03:00) Montevideo</option>
+            <option value="America/Miquelon">(GMT-03:00) Miquelon, St. Pierre</option>
+            <option value="America/Godthab">(GMT-03:00) Greenland</option>
+            <option value="America/Argentina/Buenos_Aires">(GMT-03:00) Buenos Aires</option>
+            <option value="America/Sao_Paulo">(GMT-03:00) Brasilia</option>
+            <option value="America/Noronha">(GMT-02:00) Mid-Atlantic</option>
+            <option value="Atlantic/Cape_Verde">(GMT-01:00) Cape Verde Is.</option>
+            <option value="Atlantic/Azores">(GMT-01:00) Azores</option>
+            <option value="Europe/Belfast">(GMT) Greenwich Mean Time : Belfast</option>
+            <option value="Europe/Dublin">(GMT) Greenwich Mean Time : Dublin</option>
+            <option value="Europe/Lisbon">(GMT) Greenwich Mean Time : Lisbon</option>
+            <option value="Europe/London">(GMT) Greenwich Mean Time : London</option>
+            <option value="Africa/Abidjan">(GMT) Monrovia, Reykjavik</option>
+            <option value="Europe/Amsterdam">(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna</option>
+            <option value="Europe/Belgrade">(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague</option>
+            <option value="Europe/Brussels">(GMT+01:00) Brussels, Copenhagen, Madrid, Paris</option>
+            <option value="Africa/Algiers">(GMT+01:00) West Central Africa</option>
+            <option value="Africa/Windhoek">(GMT+01:00) Windhoek</option>
+            <option value="Asia/Beirut">(GMT+02:00) Beirut</option>
+            <option value="Africa/Cairo">(GMT+02:00) Cairo</option>
+            <option value="Asia/Gaza">(GMT+02:00) Gaza</option>
+            <option value="Africa/Blantyre">(GMT+02:00) Harare, Pretoria</option>
+            <option value="Asia/Jerusalem">(GMT+02:00) Jerusalem</option>
+            <option value="Europe/Minsk">(GMT+02:00) Minsk</option>
+            <option value="Asia/Damascus">(GMT+02:00) Syria</option>
+            <option value="Europe/Moscow">(GMT+03:00) Moscow, St. Petersburg, Volgograd</option>
+            <option value="Africa/Addis_Ababa">(GMT+03:00) Nairobi</option>
+            <option value="Asia/Tehran">(GMT+03:30) Tehran</option>
+            <option value="Asia/Dubai">(GMT+04:00) Abu Dhabi, Muscat</option>
+            <option value="Asia/Yerevan">(GMT+04:00) Yerevan</option>
+            <option value="Asia/Kabul">(GMT+04:30) Kabul</option>
+            <option value="Asia/Yekaterinburg">(GMT+05:00) Ekaterinburg</option>
+            <option value="Asia/Tashkent">(GMT+05:00) Tashkent</option>
+            <option value="Asia/Kolkata">(GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi</option>
+            <option value="Asia/Katmandu">(GMT+05:45) Kathmandu</option>
+            <option value="Asia/Dhaka">(GMT+06:00) Astana, Dhaka</option>
+            <option value="Asia/Novosibirsk">(GMT+06:00) Novosibirsk</option>
+            <option value="Asia/Rangoon">(GMT+06:30) Yangon (Rangoon)</option>
+            <option value="Asia/Bangkok">(GMT+07:00) Bangkok, Hanoi, Jakarta</option>
+            <option value="Asia/Krasnoyarsk">(GMT+07:00) Krasnoyarsk</option>
+            <option value="Asia/Hong_Kong">(GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi</option>
+            <option value="Asia/Irkutsk">(GMT+08:00) Irkutsk, Ulaan Bataar</option>
+            <option value="Australia/Perth">(GMT+08:00) Perth</option>
+            <option value="Australia/Eucla">(GMT+08:45) Eucla</option>
+            <option value="Asia/Tokyo">(GMT+09:00) Osaka, Sapporo, Tokyo</option>
+            <option value="Asia/Seoul">(GMT+09:00) Seoul</option>
+            <option value="Asia/Yakutsk">(GMT+09:00) Yakutsk</option>
+            <option value="Australia/Adelaide">(GMT+09:30) Adelaide</option>
+            <option value="Australia/Darwin">(GMT+09:30) Darwin</option>
+            <option value="Australia/Brisbane">(GMT+10:00) Brisbane</option>
+            <option value="Australia/Hobart">(GMT+10:00) Hobart</option>
+            <option value="Asia/Vladivostok">(GMT+10:00) Vladivostok</option>
+            <option value="Australia/Lord_Howe">(GMT+10:30) Lord Howe Island</option>
+            <option value="Etc/GMT-11">(GMT+11:00) Solomon Is., New Caledonia</option>
+            <option value="Asia/Magadan">(GMT+11:00) Magadan</option>
+            <option value="Pacific/Norfolk">(GMT+11:30) Norfolk Island</option>
+            <option value="Asia/Anadyr">(GMT+12:00) Anadyr, Kamchatka</option>
+            <option value="Pacific/Auckland">(GMT+12:00) Auckland, Wellington</option>
+            <option value="Etc/GMT-12">(GMT+12:00) Fiji, Kamchatka, Marshall Is.</option>
+            <option value="Pacific/Chatham">(GMT+12:45) Chatham Islands</option>
+            <option value="Pacific/Tongatapu">(GMT+13:00) Nuku'alofa</option>
+            <option value="Pacific/Kiritimati">(GMT+14:00) Kiritimati</option>
+            </select>
+        </div>
+        <div>
+            <label for="modifyType">Change type</label>
+            <select id="modifyType">
+                <option value="Choose Type">Choose Type</option>
+                <option value="Private">Private</option>
+                <option value="Public">Public</option>
+            </select>
+        </div>
+        <div>
+            <p id="modifyTagsP"></p>
+            <textarea id="modifyTags" cols="45" rows="4"></textarea><br>
+        </div>
+        <div>
+            <label for="saveModify">Save Changes </label>
+            <button class="btn" type="button" id="saveModify" onclick="saveModifyChanges()">Save</button>
+        </div>
+        <div>
+            <label for="modifyDelete">Delete Prediction</label>
+            <button type="button" class="btn" id="modifyDelete" onclick="predictionDelete()">Delete <svg width="14px" height="14px"xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg></button>
+        </div>
+        <button class="btn" onclick="location.reload()" VALUE="Refresh">Go Back</button><br><br<br><br><br><br>
+    </div><br><br><br><br>
+</main>
+
+    <footer id="footer" class="footer">
+        <div class="footerDiv">
+            <br><br>
+            <label id="reportButtonLabel" for="problemButton">Want to report a problem</label>..
+            <button class="reportButton" id="problemButton" onclick="show()">Report</button>
+            <input id="reportProblem" placeholder="problem" class="hide">.
+            <input type="email" id="reportEmail" placeholder="email (optional)" class="hide">.
+            <button class="reportButton hide" id="problemButton2" onclick="report()">Report</button>.
+            <button class="reportButton hide" id="problemButton3" onclick="cancel()">Cancel</button>      
+        </div>
+        <p class="footerP">&#169; This page was created by Neel</p>
+    </footer>
+</body>
+</html>
