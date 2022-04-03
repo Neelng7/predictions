@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>        
+    <script src="https://www.gstatic.com/firebasejs/6.3.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-database.js"></script>
+    <script>
+      var firebaseConfig = {
+        apiKey: "AIzaSyDXKAkvjpRIw0QvoG3l-QfqdN10rIs0-_0",
+        authDomain: "time-capsule-1.firebaseapp.com",
+        databaseURL: "https://time-capsule-1-default-rtdb.firebaseio.com",
+        projectId: "time-capsule-1",
+        storageBucket: "time-capsule-1.appspot.com",
+        messagingSenderId: "775954139303",
+        appId: "1:775954139303:web:913fd1e3454d4e4e82b382"
+        };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <base href="https://neelng7.github.io/predictions/">
+    <link href="styles.css" rel="stylesheet"/>
+    <script src="reportProblem.js" defer></script>
+    <script src="search.js" defer></script>
+    <link class="link" rel="icon" href="images/Logo.png" type="image/icon type">
+    <title>Search - Predictions</title>
+</head>
+<body>
+    <header id="portrait" class="hide"><br><br>....
+    <button onclick="dropdown()" id="dropdown"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="list-ul" role="img" 
+        style="height:25px;width:25px;"xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-list-ul 
+        fa-lg"><path fill="currentColor" d="M16 96C16 69.49 37.49 48 64 48C90.51 48 112 69.49 112 96C112 122.5 90.51 144 64 144C37.49 
+        144 16 122.5 16 96zM480 64C497.7 64 512 78.33 512 96C512 113.7 497.7 128 480 128H192C174.3 128 160 113.7 160 96C160 78.33 174.3 
+        64 192 64H480zM480 224C497.7 224 512 238.3 512 256C512 273.7 497.7 288 480 288H192C174.3 288 160 273.7 160 256C160 238.3 174.3 224 
+        192 224H480zM480 384C497.7 384 512 398.3 512 416C512 433.7 497.7 448 480 448H192C174.3 448 160 433.7 160 416C160 398.3 174.3 384 
+        192 384H480zM16 416C16 389.5 37.49 368 64 368C90.51 368 112 389.5 112 416C112 442.5 90.51 464 64 464C37.49 464 16 442.5 16 416zM112 
+        256C112 282.5 90.51 304 64 304C37.49 304 16 282.5 16 256C16 229.5 37.49 208 64 208C90.51 208 112 229.5 112 256z" ></path></svg></button>
+    <b>Predictions</b><br>. <br>.
+    </header>
+    <header id="landscape">
+        <h1 id="h1main">Predictions</h1>
+        <a title="About" href="about.html">About</a>........
+        <a title="Search" class="selected" href="search.html">Search</a>........
+        <a title="Checkout" href="">Checkout</a>........
+        <a title="New Prediction" href="new-prediction.html">New Prediction</a>........
+        <a title="Sign In" href="modify-prediction.html">Sign In</a>........
+        <a title="Report Problem" onclick="fnScroll()">&#x2691;</a><br>.
+    </div>
+    </header><br><br><br><br><br><br>
+    <div class="progress-bar" data-progress></div>
+    <div id="dropdown-menu" class="hide">
+        <ul><br>
+            <a href='about.html'><li>About</li></a>
+            <a href="search.html"><li>Search</li></a>
+            <a href=""><li>Checkout</li></a>
+            <a href="new-prediction.html"><li>New Prediction</li></a>
+            <a href="modify-prediction.html"><li>Sign In</li></a>
+            <li onclick="fnScroll();">Report a Problem &#x2691;</li>
+        </ul>
+    </div>
+    
+    <main id="main">        
+    <div id="search-div">
+        <h1>Search</h1> 
+        <p>All public predictions will be displayed here</p>
+        <p>You can search public predictions by entering the name/ username/ public tags</p>
+        <p>Search by entering all relevant information seperated by a space</p><br>
+
+        <label for="search">Search Prediction: </label>
+        <input type="search" id="search" data-seach>
+        <a title="Refresh Results" id="refresh-search" onclick="location.reload()" class="fa">&#xf01e;</a><br><br>
+        <label for="searchFilter" id="searchFilterLabel">Only show released predictions</label>
+        <input type="checkbox" id="searchFilter" class="inp" onclick="filterSearchPredictions()">
+        <b title="These predictions are past its release date and are available to view"> &#9432;</b><br><br>
+        <i class="fa-solid fa-circle-notch fa-spin" id="search-load"></i><br>
+        <h3 id="noSearchResults" class="hide">No Results Found</h3>
+        
+        <div id="prediction-wrapper" >
+            <div class="prediction-cards" data-prediction-cards-container></div>
+        </div>
+        <template data-user-template>
+        <a id="checked" onclick="checkoutSearchedPrediction(this.id)" class="card">
+            <i style="font-size:24px;" id="predictionLock" class="fa"></i><br><br>
+            <div class="header" data-header></div>
+            <div class="body" data-body></div>
+            <div class="body2" data-body2></div>
+            <div class="search-tags" data-tags></div>
+        </a>
+        </template>
+
+    </div>
+</main><br><br><br><br><br>
+
+    <footer class="footer">
+        <div class="footerDiv">
+            <br><br>
+            <label id="reportButtonLabel" for="problemButton">Want to report a problem</label>..
+            <button class="reportButton" id="problemButton" onclick="show()">Report</button>
+            <input id="reportProblem" placeholder="problem" class="hide">.
+            <input type="email" id="reportEmail" placeholder="email (optional)" class="hide">.
+            <button class="reportButton hide" id="problemButton2" onclick="report()">Report</button>.
+            <button class="reportButton hide" id="problemButton3" onclick="cancel()">Cancel</button>        
+        </div>
+        <p class="footerP">&#169; This page was created by Neel</p>
+    </footer>
+</body>
+</html>
