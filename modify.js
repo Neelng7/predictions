@@ -217,7 +217,7 @@ function predictionDelete(){
     if(promptPassword == passwordModify.value){
     var userRef = database.ref('/users/'+ "UserId: "+username.value);
     alert("Prediction deleted!");
-    window.location.href = "/";
+    window.location.href = "";
     userRef.remove(); 
     }else{
         alert("Password is wrong. Prediction not deleted.")
