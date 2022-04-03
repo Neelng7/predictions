@@ -116,7 +116,6 @@ function viewing(){
     viewFileRequest.style.color = "red";
     predictionNotReleased.classList.toggle("hide", false);
     } 
-    // document.getElementById("search-load").classList.toggle("hide", true);
     progressBarInterval = setInterval(progressBarFn, 2, 6);
 });
 progressBarInterval = setInterval(progressBarFn, 3, 5)});
