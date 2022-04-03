@@ -11,7 +11,7 @@ var release_date, Rtime, rdateStr, rtimeStr;
 var today = new Date();
 var lockArray = [], i=0;
 
-progressBarInterval = setInterval(progressBarFn, 1, 8, 0.35);
+progressBarInterval = setInterval(progressBarFn, 20, 8, 0.35);
 
 var dbusers_ref  = database.ref('/users/');
 dbusers_ref.once("value",(data) => {
