@@ -144,7 +144,7 @@ function verify(){
 }
 
 function signInUser(){
-    window.location.href = "/modify-prediction.html?" + username_check.value +"+"+ firstName_check.value +"+"+ lastName_check.value;
+    window.location.href = "modify-prediction?" + username_check.value +"+"+ firstName_check.value +"+"+ lastName_check.value;
 }
 
 if(window.location.href.includes("+")){
