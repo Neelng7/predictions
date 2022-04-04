@@ -52,6 +52,10 @@ function passwordVerify(){
     }) 
 }
 
+document.addEventListener('keydown', (keydown) => {
+    if(keydown.key == "Enter") verifyData();
+});
+
 function verifyData(){
     if(username.value==""){
         alert("Please enter a username");

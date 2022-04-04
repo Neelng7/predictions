@@ -125,6 +125,10 @@ progressBarInterval = setInterval(progressBarFn, 4, 2)});
 progressBarInterval = setInterval(progressBarFn, 4, 1)});
 }
 
+document.addEventListener('keydown', (keydown) => {
+    if(keydown.key == "Enter") verify();
+});
+
 function verify(){
     if(username_check.value==""){
         alert("Please enter a username");

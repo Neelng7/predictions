@@ -67,6 +67,10 @@ confirmUsernameRef.once("value",function(data){
 });
 }
 
+document.addEventListener('keydown', (keydown) => {
+  if(keydown.key == "Enter") verifyInfo();
+});
+
 function verifyInfo(){
   if(username.value==""){
     alert("Please enter a username");
