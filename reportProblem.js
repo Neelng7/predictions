@@ -60,7 +60,7 @@ function cancel(){
 function dropdown(){
     document.getElementById("main").classList.toggle("hide");
     document.getElementById("dropdown-menu").classList.toggle("hide");
-    document.getElementsByTagName("body")[0].style.backgroundColor = "rgb(0, 75, 122)";
+    document.getElementsByTagName("body")[0].classList.toggle("back-blue");
 }
 
 function progressBarFn(currentWidth, increaseWidth){

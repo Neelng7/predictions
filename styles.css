@@ -9,6 +9,9 @@ body {
     user-select: none;
     overflow-x: hidden;
 }
+.back-blue{
+    background-color: rgb(0, 75, 122);
+}
 p, span, label, legend{
     color: black;
 }
