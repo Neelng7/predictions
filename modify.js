@@ -213,14 +213,16 @@ function saveModifyChanges(){
 }
 
 function predictionDelete(){
-    var promptPassword = prompt("Enter password to delete prediction")
-    if(promptPassword == passwordModify.value){
-    var userRef = database.ref('/users/'+ "UserId: "+username.value);
-    alert("Prediction deleted!");
-    window.location.href = "";
-    userRef.remove(); 
-    }else{
-        alert("Password is wrong. Prediction not deleted.")
+    var promptPassword = prompt("Enter password to delete prediction");
+    if(promptPassword !== null){
+        if(promptPassword == passwordModify.value){
+        var userRef = database.ref('/users/'+ "UserId: "+username.value);
+        alert("Prediction deleted!");
+        window.location.href = "/";
+        userRef.remove(); 
+        }else{
+            alert("Password is wrong. Prediction not deleted.")
+        }
     }
 }
 
