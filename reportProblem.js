@@ -6,11 +6,7 @@ var numberOfReports, numberOfReports2, reportCount;
 
 function fnScroll(){
     window.scrollTo(0,document.body.scrollHeight);
-    document.getElementById("problemButton").classList.toggle("hide", true);
-    document.getElementById("problemButton2").classList.toggle("hide",false);
-    document.getElementById("problemButton3").classList.toggle("hide",false);
-    email.classList.toggle("hide",false);
-    problem.classList.toggle("hide",false);
+    show();
     problem.focus();
 }
 
@@ -60,6 +56,15 @@ function dropdown(){
     document.getElementById("dropdown-menu").classList.toggle("hide");
     document.getElementsByTagName("body")[0].classList.toggle("back-blue");
 }
+
+document.addEventListener('keydown', keydown => {
+    if(keydown.key == "1" && keydown["altKey"]) window.location.href = "/predictions/about";
+    if(keydown.key == "2" && keydown["altKey"]) window.location.href = "/predictions/search";
+    if(keydown.key == "3" && keydown["altKey"]) window.location.href = "/predictions/";
+    if(keydown.key == "4" && keydown["altKey"]) window.location.href = "/predictions/new-prediction";
+    if(keydown.key == "5" && keydown["altKey"]) window.location.href = "/predictions/modify-prediction";
+    if(keydown.key == "6" && keydown["altKey"]) fnScroll();
+})
 
 function progressBarFn(currentWidth, increaseWidth){
     const computedStyle = getComputedStyle(progressBar);
