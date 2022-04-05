@@ -88,14 +88,14 @@ header{
     top: 0%;
     margin-bottom: 400%;
 }
-a{
+header > a{
     cursor: pointer;
     color: rgb(215, 215, 215);
     font-size: 100%;
     text-decoration:none;
     position: relative;
 }
-a:hover {
+header > a:hover {
     color: white;
 }
 h1{
@@ -192,7 +192,7 @@ fieldset{
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 4.5rem;
 }
-.card, .card2{
+.card, .card2, .card3{
     border: 1px solid black;
     padding: .4rem;
     max-width: 320px;
@@ -212,19 +212,32 @@ fieldset{
 .deleteReport{
     cursor: pointer;
 }
-#countID, #reportsCount, #predictionsCount{
+#read{
+    color: black;
+    height: 20px;
+    width: 20px;
+}
+.count{
     width: 40px;
 }
 #search{
     margin-right: 20px;
 }
-#refresh-search, #refresh-search2{
+#refresh-search, #refresh-search2, #refresh-search3{
     font-size: 24px;
     color: gray;
 }
-#refresh-search:hover, #refresh-search2:hover, 
+#refresh-search:hover, #refresh-search2:hover, #refresh-search3:hover, 
 #search-load, #predictionLock{
     color: black;
+}
+.focus{
+    background-color: rgba(255, 255, 138, 50%);
+}
+.readButon{
+    background: none;
+    border: 1px solid black;
+    padding-block: 4px;
 }
 #showPassword, #showPassword2{
     color: rgb(90, 90, 90);

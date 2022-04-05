@@ -49,7 +49,10 @@ confirmUsernameRef.once("value",function(data){
       tags: publicTags.value,
       timezone: selectedTimezone
     });
-    if(checkBox.checked == true){
+    database.ref('/users/'+ "UserId: "+username.value+'/status').update({
+      Scan: false
+    });
+    if(checkBox.checked){
       database.ref('/users/'+ "UserId: "+username.value+'/status').update({
       status: "Public"
     });   
