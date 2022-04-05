@@ -52,7 +52,7 @@ textarea{
 textarea:disabled{
     color: rgb(20, 20, 20);
 }
-#date{
+#date, .pointer{
     cursor: pointer;
 }
 .btn{

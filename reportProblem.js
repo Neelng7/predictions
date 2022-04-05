@@ -40,11 +40,9 @@ if(problem.value == "" || problem.value == null){
         ["email" + numberOfReports]: email.value
     });
     alert("Thank you. The Problem has been Reported.");
-    // location.reload();
     cancel();
     problem.value="";
     email.value="";   
-    if(window.location.href.includes("/admin")) callReport();
     });
 }
 }
