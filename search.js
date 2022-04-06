@@ -122,6 +122,8 @@ seachInput.addEventListener("input",(element) => {
     }else{
         document.getElementById("noSearchResults").classList.toggle("hide", true);        
     }
+    const searchResults = document.getElementById("searchResults");
+    searchResults.innerText = cardEls.length-noSearchResultsArray.length+ " search results found";
 })
 
 function createOnclickEvent(){
