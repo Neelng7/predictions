@@ -2,9 +2,10 @@ var database = firebase.database();
 
 const seachInput = document.querySelector("[data-seach]");
 const progressBar = document.getElementsByClassName('progress-bar')[0];
+const searchFilter = document.getElementById("searchFilter");
 var progressBarInterval, barParts=10;
 
-var dbusers, conUser;
+var dbusers, conUser, searched = false;
 const userCardTemplate= document.querySelector("[data-user-template]");
 const predictionCardContainer= document.querySelector("[data-prediction-cards-container]");
 var release_date, Rtime, rdateStr, rtimeStr;
@@ -95,7 +96,8 @@ createOnclickEvent();
 
 seachInput.addEventListener("input",(element) => {
     const searchValue = element.target.value.toLowerCase();
-    const noSearchResultsArray = [];
+    globalThis.noSearchResultsArray = [];
+    globalThis.searched = true;
 
     const cardEls = document.querySelectorAll(".card");
     cardEls.forEach((e) => {
@@ -251,9 +253,14 @@ function releaseDateLock(){
 
 function filterSearchPredictions(){
     const cardEls = document.querySelectorAll(".card");
-    cardEls.forEach((e) => {
+    cardEls.forEach((e) => { 
         if(e.children[0].title == "Prediction Not Released"){
-            e.classList.toggle("hide");
+            if(searched){
+                if(searchFilter.checked) e.style.display = "none";
+                else if(noSearchResultsArray.includes(e.id)){
+                    e.style.display = "none";
+                }else e.style.display = "grid";
+            }else e.classList.toggle("hide");
         }
     })
 }
