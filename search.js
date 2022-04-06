@@ -90,6 +90,7 @@ for (const [index, val] of Object.entries(value)) {
 }
 }
 document.getElementById("search-load").classList.toggle("hide", true);
+createOnclickEvent();
 });
 
 seachInput.addEventListener("input",(element) => {
@@ -122,6 +123,15 @@ seachInput.addEventListener("input",(element) => {
         document.getElementById("noSearchResults").classList.toggle("hide", true);        
     }
 })
+
+function createOnclickEvent(){
+    const searchCards = document.querySelectorAll(".card");
+    searchCards.forEach((e) => {
+        e.addEventListener('click', () => {
+            checkoutSearchedPrediction(e.id);  
+        })
+    });
+    }
 
 const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
