@@ -71,8 +71,5 @@ function progressBarFn(currentWidth, increaseWidth){
     const barWidth = parseInt(computedStyle.getPropertyValue('--width'))||0;
     progressBar.style.setProperty('--width', Math.ceil(barWidth+(increaseWidth||0.27)));
     if(Math.ceil((100/barParts)*currentWidth) == Math.ceil(barWidth)) clearInterval(progressBarInterval);
-    if(Math.ceil(barWidth) >= 95){
-        clearInterval(progressBarInterval);
-        progressBar.classList.toggle("hide", true); 
-    }
+    if(Math.ceil(barWidth) >= 95) progressBar.remove();
 }
