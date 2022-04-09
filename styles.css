@@ -198,9 +198,9 @@ fieldset{
     max-width: 320px;
     color:black;
     min-width: 310px;
+    cursor: pointer;
 }
 .card:hover{
-    color: black;
     background-color: rgb(238, 238, 238);
 }
 .card > .header, .card2 > .header{
