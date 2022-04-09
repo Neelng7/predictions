@@ -336,6 +336,7 @@ li:hover{
     #landscape{display: none;}
     #prediction-wrapper{display: none;}
     .progress-bar{top: -15px}
+    .info{display: none;}
 }
 @media only screen and (max-width:615px){
         #prediction-wrapper{

@@ -90,8 +90,10 @@ for (const [index, val] of Object.entries(value)) {
     }
 }
 }
-document.getElementById("search-load").classList.toggle("hide", true);
-createOnclickEvent();
+    document.getElementById("search-load").classList.toggle("hide", true);
+    document.getElementById("search").disabled = false;
+    searchFilter.disabled = false
+    createOnclickEvent();
 });
 
 seachInput.addEventListener("input",(element) => {
