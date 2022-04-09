@@ -10,7 +10,7 @@ const userCardTemplate= document.querySelector("[data-user-template]");
 const predictionCardContainer= document.querySelector("[data-prediction-cards-container]");
 var release_date, Rtime, rdateStr, rtimeStr;
 var today = new Date();
-var lockArray = [], i=0;
+var lockArray = [], i=0, searchFilterSearchArray = [];
 
 progressBarInterval = setInterval(progressBarFn, 20, 8, 0.35);
 
@@ -100,6 +100,7 @@ seachInput.addEventListener("input",(element) => {
     const searchValue = element.target.value.toLowerCase();
     globalThis.noSearchResultsArray = [];
     globalThis.searched = true;
+    searchFilter.checked = false;
 
     const cardEls = document.querySelectorAll(".card");
     cardEls.forEach((e) => {
@@ -121,14 +122,19 @@ seachInput.addEventListener("input",(element) => {
     }
     if(e.style.display=="none") noSearchResultsArray.push(1);
 })
+    updateSearchResults();
+})
+
+function updateSearchResults(){
+    const cardEls = document.querySelectorAll(".card");
     if(noSearchResultsArray.length==cardEls.length){
         document.getElementById("noSearchResults").classList.toggle("hide", false);
     }else{
-        document.getElementById("noSearchResults").classList.toggle("hide", true);        
+        document.getElementById("noSearchResults").classList.toggle("hide", true);
     }
     const searchResults = document.getElementById("searchResults");
-    searchResults.innerText = cardEls.length-noSearchResultsArray.length+ " search results found";
-})
+    searchResults.innerText = cardEls.length-noSearchResultsArray.length-searchFilterSearchArray.length+ " search results found";
+}
 
 function createOnclickEvent(){
     const searchCards = document.querySelectorAll(".card");
@@ -137,7 +143,7 @@ function createOnclickEvent(){
             checkoutSearchedPrediction(e.id);  
         })
     });
-    }
+}
 
 const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
@@ -253,17 +259,19 @@ function releaseDateLock(){
     });
 }
 
-function filterSearchPredictions(){
+searchFilter.addEventListener('click', () => {
     const cardEls = document.querySelectorAll(".card");
+    searchFilterSearchArray = [];
     cardEls.forEach((e) => { 
         if(e.children[0].title == "Prediction Not Released"){
             if(searched){
-                if(searchFilter.checked) e.style.display = "none";
-                else if(noSearchResultsArray.includes(e.id)){
+                if(noSearchResultsArray.includes(e.id)) e.style.display = "none";   
+                else if(searchFilter.checked){
                     e.style.display = "none";
+                    searchFilterSearchArray.push(1);
                 }else e.style.display = "grid";
             }else e.classList.toggle("hide");
         }
-    })
-}
+    }); updateSearchResults();
+})
 
