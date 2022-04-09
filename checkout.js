@@ -1,6 +1,7 @@
 var database = firebase.database();
 
-var upload_date, release_date, prediction, Rtime, upload_time;
+var upload_date, upload_time, dbUploadTimezone;
+var Rtime, release_date, dbtimeZone, prediction;
 const firstName_check = document.getElementById("fname_check");
 const lastName_check = document.getElementById("lname_check");
 const username_check = document.getElementById("username_check");
@@ -38,41 +39,29 @@ function viewing(){
     var element2 = document.getElementById("secondaryDiv");
     element2.classList.toggle("hide", false);
 
-    var upload_date_ref  = database.ref('/users/'+ "UserId: "+username_check.value+'/'+"first_name:"+firstName_check.value.toLowerCase()+'/'+'last_name:'+lastName_check.value.toLowerCase() + '/' +'upload_date');
-    upload_date_ref.on("value",function(data){
-        upload_date = data.val(); 
+    var databaseRef  = database.ref('/users/'+ "UserId: "+username_check.value+'/'+"first_name:"+
+    firstName_check.value.toLowerCase()+'/'+'last_name:'+lastName_check.value.toLowerCase());
+    databaseRef.once("value",(data) => {
+        databaseVal = data.val();
+        const dataValues = Object.entries(databaseVal);
 
-    var upload_time_ref  = database.ref('/users/'+ "UserId: "+username_check.value+'/'+"first_name:"+firstName_check.value.toLowerCase()+'/'+'last_name:'+lastName_check.value.toLowerCase() + '/' +'upload_time');
-    upload_time_ref.on("value",function(data){
-        upload_time = data.val(); 
-    
-    var timezone_ref  = database.ref('/users/'+ "UserId: "+username_check.value+'/'+"first_name:"+firstName_check.value.toLowerCase()+'/'+'last_name:'+lastName_check.value.toLowerCase() + '/' +'timezone');
-    timezone_ref.on("value",function(data){
-        globalThis.dbtimeZone = data.val(); 
+        globalThis.prediction = dataValues[1][1];
+        rdateStr = dataValues[2][1];
+        rtimeStr = dataValues[3][1];
+        dbtimeZone = dataValues[5][1];
+        dbUploadTimezone = dataValues[6][1];
+        upload_date =  dataValues[7][1];
+        upload_time = dataValues[8][1];
 
-    changeTimezone(upload_date, upload_time);
+    changeTimezone(upload_date, upload_time, dbUploadTimezone);
 
     document.getElementById("viewUsername").innerHTML = "Username: " + username_check.value;
     document.getElementById("viewFirstName").innerHTML= "First Name: " + firstName_check.value.toLowerCase();
     document.getElementById("viewLastName").innerHTML = "Last Name: " + lastName_check.value.toLowerCase();
     document.getElementById("viewInitialDate").innerHTML = "This prediction was uploaded on " + date_display;
 
-    var release_date_ref  = database.ref('/users/'+ "UserId: "+username_check.value+'/'+"first_name:"+firstName_check.value.toLowerCase()+'/'+'last_name:'+lastName_check.value.toLowerCase() + '/' +'release_date');
-    release_date_ref.on("value",function(data){
-    release_date = data.val(); 
-    var rdateStr = release_date;
+    changeTimezone(rdateStr, rtimeStr, dbtimeZone);   
 
-    var Rtime_ref  = database.ref('/users/'+ "UserId: "+username_check.value+'/'+"first_name:"+firstName_check.value.toLowerCase()+'/'+'last_name:'+lastName_check.value.toLowerCase() + '/' +'release_time');
-    Rtime_ref.on("value",function(data){
-        Rtime = data.val(); 
-        var rtimeStr = Rtime;
-
-    changeTimezone(rdateStr, rtimeStr);   
-
-    var prediction_ref  = database.ref('/users/'+ "UserId: "+username_check.value+'/'+"first_name:"+firstName_check.value.toLowerCase()+'/'+'last_name:'+lastName_check.value.toLowerCase() + '/' +'prediction');
-    prediction_ref.on("value",function(data){
-        globalThis.prediction = data.val(); 
-    
     if((parseInt(today.getFullYear())) > newYear){
         viewFileRequest.innerHTML = "This prediction was released on " + date_display;
         mainPrediction.innerHTML= prediction;
@@ -118,11 +107,11 @@ function viewing(){
     } 
     progressBarInterval = setInterval(progressBarFn, 2, 6);
 });
-progressBarInterval = setInterval(progressBarFn, 3, 5)});
-progressBarInterval = setInterval(progressBarFn, 4, 4)});
-progressBarInterval = setInterval(progressBarFn, 4, 3)});
-progressBarInterval = setInterval(progressBarFn, 4, 2)});
-progressBarInterval = setInterval(progressBarFn, 4, 1)});
+// progressBarInterval = setInterval(progressBarFn, 3, 5)});
+// progressBarInterval = setInterval(progressBarFn, 4, 4)});
+// progressBarInterval = setInterval(progressBarFn, 4, 3)});
+// progressBarInterval = setInterval(progressBarFn, 4, 2)});
+// progressBarInterval = setInterval(progressBarFn, 4, 1)});
 }
 
 document.addEventListener('keydown', (keydown) => {
@@ -159,7 +148,7 @@ if(window.location.href.includes("+")){
     viewing();
 }
 
-function changeTimezone(dbdate, dbTime){
+function changeTimezone(dbdate, dbTime, zone){
 
     const matches = dbdate.split("/");
     const matches_rtime = dbTime.split(":");
@@ -169,7 +158,7 @@ function changeTimezone(dbdate, dbTime){
     matches[1] = parseInt(matches[1]);
     matches[2] = parseInt(matches[2]);
 
-    const timeconversion = today.toLocaleString('en-US', { timeZone: dbtimeZone }); //dbtimeZone=timezone from db
+    const timeconversion = today.toLocaleString('en-US', { timeZone: zone }); //dbtimeZone=timezone from db
     const timeDifference_1 = (timeconversion.split(" ")[1]).split(":"); 
 
     if(timeconversion.split(" ")[2] == "PM" && timeDifference_1[0] == 12){

@@ -28,7 +28,7 @@ var today = new Date();
 
 const RdateFormatArray = date.value.split("-");
 const RdateFormat = RdateFormatArray[1] +"/"+ RdateFormatArray[2] +"/"+ RdateFormatArray[0];
-const UdateFormat = today.getMonth() +"/"+ today.getDate() +"/"+ today.getFullYear();
+const UdateFormat = today.getMonth()+1 +"/"+ today.getDate() +"/"+ today.getFullYear();
 const UTimeFormat = today.getHours() +":"+ today.getMinutes();
 
 const Rtime = document.getElementById("Rtime");
@@ -45,9 +45,10 @@ confirmUsernameRef.once("value",function(data){
       release_time: Rtime.value,
       upload_date: UdateFormat,
       upload_time: UTimeFormat,
+      timezone: selectedTimezone,
+      uploadTimezone: timezone,
       prediction: prediction.value,
-      tags: publicTags.value,
-      timezone: selectedTimezone
+      tags: publicTags.value
     });
     database.ref('/users/'+ "UserId: "+username.value+'/status').update({
       Scan: false

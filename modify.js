@@ -4,9 +4,9 @@ const firstName = document.getElementById("fname_modify");
 const lastName = document.getElementById("lname_modify");
 const username = document.getElementById("username_modify");
 const passwordModify = document.getElementById("pass_modify");
-var release_date, prediction, upload_date, passwordDB;
+var rdateStr, prediction, upload_date, passwordDB, databaseRef;
 var today = new Date();
-var Rtime, type, modifyTags, upload_time;
+var rtimeStr, type, modifyTags, upload_time, dataValues;
 
 const modifyFileRequest = document.getElementById("modifyFileRequest");
 const mainprediction = document.getElementById("mainprediction");
@@ -14,15 +14,18 @@ const progressBar = document.getElementsByClassName('progress-bar')[0];
 var progressBarInterval, barParts=9;
 
 function modifyData(){
-    var upload_date_ref  = database.ref('/users/'+ "UserId: "+username.value+'/'+"first_name:"+firstName.value.toLowerCase()+'/'+'last_name:'+lastName.value.toLowerCase() + '/' +'upload_date');
-    upload_date_ref.on("value",function(data){
-    upload_date = data.val();
-    if(upload_date !== null){
-        passwordVerify();
-    }else{
-        alert("No such prediction exists");
-    }
-})
+    var databaseRef  = database.ref('/users/'+ "UserId: "+username.value+'/'+"first_name:"+firstName.value.toLowerCase()+'/'+'last_name:'+lastName.value.toLowerCase());
+    databaseRef.once("value",(data) => {
+        databaseVal = data.val();
+        dataValues = Object.entries(databaseVal);
+        // upload_date =  dataValues[7][1];
+        upload_date =  dataValues[6][1];
+        if(upload_date !== null){
+            passwordVerify();
+        }else{
+            alert("No such prediction exists");
+        }
+    });
 }
 
 const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -32,24 +35,22 @@ const timeZoneOptions = document.getElementsByTagName("option");
 for(let i=0; i<timeZoneOptions.length; i++) timeZoneOptions[i].title=timeZoneOptions[i].value;
 
 function passwordVerify(){
-    var passwordDB_ref = database.ref('/users/'+ "UserId: "+username.value+'/'+"first_name:"+firstName.value.toLowerCase()+'/'+'last_name:'+lastName.value.toLowerCase() + '/' +'pass_word');
-    passwordDB_ref.on("value",function(data){
-        passwordDB = data.val();
-        if(passwordModify.value == passwordDB){
-            progressBar.classList.toggle('hide', false);
-            progressBarInterval = setInterval(progressBarFn, 50, 1);
-            document.getElementById("title").innerHTML="Modify Prediction";
-            document.getElementById("SignInTitle").innerText = "Modify Prediction";
-            document.getElementById("mainForm").classList.toggle("hide", true);
-            // document.getElementById("mainForm2").classList.toggle("hide", true);
-            document.getElementById("modifyPara").classList.toggle("hide", true);
-            document.getElementById("mainDiv").classList.toggle("hide", false);
-            // document.getElementById("maindiv2").classList.toggle("hide", false);
-            modifyMain();
-        }else if(passwordDB){
-            alert("Password is wrong");
-        }
-    }) 
+    passwordDB = dataValues[0][1]
+    if(passwordModify.value == passwordDB){
+        progressBar.classList.toggle('hide', false);
+        progressBarInterval = setInterval(progressBarFn, 50, 1);
+        document.getElementById("title").innerHTML="Modify Prediction";
+        document.getElementById("SignInTitle").innerText = "Modify Prediction";
+        document.getElementById("mainForm").classList.toggle("hide", true);
+        // document.getElementById("mainForm2").classList.toggle("hide", true);
+        document.getElementById("modifyPara").classList.toggle("hide", true);
+        document.getElementById("mainDiv").classList.toggle("hide", false);
+        // document.getElementById("maindiv2").classList.toggle("hide", false);
+        modifyMain();
+    }else if(passwordDB){
+        alert("Password is wrong");
+    }
+    // }) 
 }
 
 document.addEventListener('keydown', (keydown) => {
@@ -82,19 +83,22 @@ function verifyData(){
 
 function modifyMain(){
 
-    var timezone_ref  = database.ref('/users/'+ "UserId: "+username.value+'/'+"first_name:"+firstName.value.toLowerCase()+'/'+'last_name:'+lastName.value.toLowerCase() + '/' +'timezone');
-    timezone_ref.on("value",function(data){
-        globalThis.dbtimeZone = data.val(); 
+    passwordDB = dataValues[0][1]
+    prediction = dataValues[1][1];
+    rdateStr = dataValues[2][1];
+    rtimeStr = dataValues[3][1];
+    modifyTags = dataValues[4][1];
+    dbtimeZone = dataValues[5][1];
+    dbUploadTimezone = dataValues[6][1];
+    upload_date =  dataValues[7][1];
+    upload_time = dataValues[8][1];
     
     const dbTimezoneOption = document.getElementById("dbTimezone");
     dbTimezoneOption.value = dbtimeZone;
     dbTimezoneOption.title = dbtimeZone;
     dbTimezoneOption.innerHTML = dbtimeZone;
 
-    var upload_time_ref  = database.ref('/users/'+ "UserId: "+username.value+'/'+"first_name:"+firstName.value.toLowerCase()+'/'+'last_name:'+lastName.value.toLowerCase() + '/' +'upload_time');
-    upload_time_ref.on("value",function(data){
-        upload_time = data.val();
-        changeTimezone(upload_date, upload_time);
+    changeTimezone(upload_date, upload_time, dbUploadTimezone);
 
     document.getElementById("modifyUsername").innerHTML = "Username: " + username.value;
     document.getElementById("modifypasword").innerHTML= "Password: " + passwordModify.value;
@@ -107,44 +111,27 @@ function modifyMain(){
     type = data.val();
     document.getElementById("predictionType").innerHTML = "Type: " + type;
 
-    var modifyTags_ref  = database.ref('/users/'+ "UserId: "+username.value+'/'+"first_name:"+firstName.value.toLowerCase()+'/'+'last_name:'+lastName.value.toLowerCase() + '/' +'tags');
-    modifyTags_ref.on("value",function(data){
-        modifyTags = data.val();
-        if(type == "Public"){
-            if(modifyTags == "" || modifyTags==null){
-            document.getElementById("modifyTags").setAttribute("placeholder","No Given tags\r\n Add tags such as: #football, #basketball, #tenis");
-            document.getElementById("modifyTagsP").innerHTML = "Public tags:";
-            document.getElementById("modifyTagsP").style.color = "black";
-            }else{
-            document.getElementById("modifyTags").innerHTML = modifyTags;
-            document.getElementById("modifyTagsP").innerHTML = "Public tags:";
-            document.getElementById("modifyTagsP").style.color = "black";
-            }
-        }else if(type == "Private"){
-            document.getElementById("modifyTags").innerHTML = modifyTags;
-            document.getElementById("modifyTagsP").innerHTML = "Prediction is Private. Tags are only displayed when prediction is public";
-            document.getElementById("modifyTagsP").style.color = "red";
+    if(modifyTags == "" || modifyTags==null){
+        document.getElementById("modifyTags").setAttribute("placeholder",
+        "No Given tags\r\n Add tags such as: #football, #basketball, #tenis");
+    }
+    if(type == "Public"){
+        if(modifyTags == "" || modifyTags==null){
+        document.getElementById("modifyTagsP").innerHTML = "Public tags:";
+        document.getElementById("modifyTagsP").style.color = "black";
+        }else{
+        document.getElementById("modifyTags").innerHTML = modifyTags;
+        document.getElementById("modifyTagsP").innerHTML = "Public tags:";
+        document.getElementById("modifyTagsP").style.color = "black";
         }
-progressBarInterval = setInterval(progressBarFn, 3, 6);});
-progressBarInterval = setInterval(progressBarFn, 3, 5);});
-progressBarInterval = setInterval(progressBarFn, 3, 4);});
+    }else if(type == "Private"){
+        document.getElementById("modifyTags").innerHTML = modifyTags;
+        document.getElementById("modifyTagsP").innerHTML = "Prediction is Private. Tags are only displayed when prediction is public";
+        document.getElementById("modifyTagsP").style.color = "red";
+    }
 
-    var release_date_ref  = database.ref('/users/'+ "UserId: "+username.value+'/'+"first_name:"+firstName.value.toLowerCase()+'/'+'last_name:'+lastName.value.toLowerCase() + '/' +'release_date');
-    release_date_ref.on("value",function(data){
-    release_date = data.val(); 
-    var rdateStr = release_date;
+    changeTimezone(rdateStr, rtimeStr, dbtimeZone);
 
-    var Rtime_ref  = database.ref('/users/'+ "UserId: "+username.value+'/'+"first_name:"+firstName.value.toLowerCase()+'/'+'last_name:'+lastName.value.toLowerCase() + '/' +'release_time');
-    Rtime_ref.on("value",function(data){
-        Rtime = data.val(); 
-        var rtimeStr = Rtime;
-
-    changeTimezone(rdateStr, rtimeStr);
-
-    var prediction_ref  = database.ref('/users/'+ "UserId: "+username.value+'/'+"first_name:"+firstName.value.toLowerCase()+'/'+'last_name:'+lastName.value.toLowerCase() + '/' +'prediction');
-    prediction_ref.on("value",function(data){
-    prediction = data.val(); 
-    
     if((parseInt(today.getFullYear())) > newYear){ 
         modifyFileRequest.innerHTML = "This prediction was released on " + date_display;
         mainprediction.innerHTML = prediction;
@@ -181,10 +168,11 @@ progressBarInterval = setInterval(progressBarFn, 3, 4);});
       }
     progressBarInterval = setInterval(progressBarFn, 3, 9);
 });
-progressBarInterval = setInterval(progressBarFn, 3, 8);});
-progressBarInterval = setInterval(progressBarFn, 3, 7);});
-progressBarInterval = setInterval(progressBarFn, 3, 3);});
+// progressBarInterval = setInterval(progressBarFn, 3, 8);});
+// progressBarInterval = setInterval(progressBarFn, 3, 7);});
+// progressBarInterval = setInterval(progressBarFn, 3, 3);});
 }
+
 
 function saveModifyChanges(){
     const modifyReleaseDate = document.getElementById("modifyReleaseDate");
@@ -250,7 +238,7 @@ if(window.location.href.includes("+")){
     }else passwordModify.focus();
 }
 
-function changeTimezone(dbdate, dbTime){
+function changeTimezone(dbdate, dbTime, zone){
     
     const matches = dbdate.split("/");
     const matches_rtime = dbTime.split(":");
@@ -260,7 +248,7 @@ function changeTimezone(dbdate, dbTime){
     matches[1] = parseInt(matches[1]);
     matches[2] = parseInt(matches[2]);
 
-    const timeconversion = today.toLocaleString('en-US', { timeZone: dbtimeZone }); //dbtimeZone=timezone from db
+    const timeconversion = today.toLocaleString('en-US', { timeZone: zone }); //dbtimeZone=timezone from db
     const timeDifference_1 = (timeconversion.split(" ")[1]).split(":"); 
 
     if(timeconversion.split(" ")[2] == "PM" && timeDifference_1[0] == 12){
