@@ -98,7 +98,8 @@ for (const [index, val] of Object.entries(value)) {
 
 seachInput.addEventListener("input",(element) => {
     const searchValue = element.target.value.toLowerCase();
-    globalThis.noSearchResultsArray = [];
+    noSearchResultsArray = [];
+    searchFilterSearchArray = [];    
     globalThis.searched = true;
     searchFilter.checked = false;
 

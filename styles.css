@@ -95,7 +95,7 @@ header > a{
     text-decoration:none;
     position: relative;
 }
-a:link{
+a:link, a:active, a:visited{
     text-decoration: none;
 }
 header > a:hover {
