@@ -15,11 +15,9 @@ var progressBarInterval, barParts=9;
 
 function modifyData(){
     var databaseRef  = database.ref('/users/'+ "UserId: "+username.value+'/'+"first_name:"+firstName.value.toLowerCase()+'/'+'last_name:'+lastName.value.toLowerCase());
-    databaseRef.once("value",(data) => {
-        databaseVal = data.val();
-        dataValues = Object.entries(databaseVal);
-        // upload_date =  dataValues[7][1];
-        upload_date =  dataValues[6][1];
+    databaseRef.on("value",(data) => {
+        dataValues = data.val();
+        upload_date = dataValues.upload_date;
         if(upload_date !== null){
             passwordVerify();
         }else{
@@ -35,7 +33,7 @@ const timeZoneOptions = document.getElementsByTagName("option");
 for(let i=0; i<timeZoneOptions.length; i++) timeZoneOptions[i].title=timeZoneOptions[i].value;
 
 function passwordVerify(){
-    passwordDB = dataValues[0][1]
+    passwordDB = dataValues.pass_word;
     if(passwordModify.value == passwordDB){
         progressBar.classList.toggle('hide', false);
         progressBarInterval = setInterval(progressBarFn, 50, 1);
@@ -83,15 +81,15 @@ function verifyData(){
 
 function modifyMain(){
 
-    passwordDB = dataValues[0][1]
-    prediction = dataValues[1][1];
-    rdateStr = dataValues[2][1];
-    rtimeStr = dataValues[3][1];
-    modifyTags = dataValues[4][1];
-    dbtimeZone = dataValues[5][1];
-    dbUploadTimezone = dataValues[6][1];
-    upload_date =  dataValues[7][1];
-    upload_time = dataValues[8][1];
+    prediction = dataValues.prediction;
+    rdateStr = dataValues.release_date;
+    rtimeStr = dataValues.release_time;
+    dbtimeZone = dataValues.timezone;
+    dbUploadTimezone = dataValues.uploadTimezone;
+    upload_date = dataValues.upload_date;
+    upload_time = dataValues.upload_time;
+    passwordDB = dataValues.pass_word;
+    modifyTags = dataValues.tags;
     
     const dbTimezoneOption = document.getElementById("dbTimezone");
     dbTimezoneOption.value = dbtimeZone;

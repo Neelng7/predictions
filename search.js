@@ -5,12 +5,12 @@ const progressBar = document.getElementsByClassName('progress-bar')[0];
 const searchFilter = document.getElementById("searchFilter");
 var progressBarInterval, barParts=10;
 
-var dbusers, conUser, searched = false;
+var dbusers, conUser;
 const userCardTemplate= document.querySelector("[data-user-template]");
 const predictionCardContainer= document.querySelector("[data-prediction-cards-container]");
 var release_date, Rtime, rdateStr, rtimeStr;
 var today = new Date();
-var lockArray = [], i=0, searchFilterSearchArray = [];
+var lockArray = [], i=0, searchFilterSearchArray = [], noSearchResultsArray = [];
 
 progressBarInterval = setInterval(progressBarFn, 20, 8, 0.35);
 
@@ -97,10 +97,10 @@ for (const [index, val] of Object.entries(value)) {
 });
 
 seachInput.addEventListener("input",(element) => {
+
     const searchValue = element.target.value.toLowerCase();
     noSearchResultsArray = [];
     searchFilterSearchArray = [];    
-    globalThis.searched = true;
     searchFilter.checked = false;
 
     const cardEls = document.querySelectorAll(".card");
@@ -121,7 +121,7 @@ seachInput.addEventListener("input",(element) => {
             break;
         } 
     }
-    if(e.style.display=="none") noSearchResultsArray.push(1);
+    if(e.style.display=="none") noSearchResultsArray.push(e.id);
 })
     updateSearchResults();
 })
@@ -265,13 +265,11 @@ searchFilter.addEventListener('click', () => {
     searchFilterSearchArray = [];
     cardEls.forEach((e) => { 
         if(e.children[0].title == "Prediction Not Released"){
-            if(searched){
                 if(noSearchResultsArray.includes(e.id)) e.style.display = "none";   
                 else if(searchFilter.checked){
                     e.style.display = "none";
                     searchFilterSearchArray.push(1);
                 }else e.style.display = "grid";
-            }else e.classList.toggle("hide");
         }
     }); updateSearchResults();
 })

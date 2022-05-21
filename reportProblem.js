@@ -1,3 +1,15 @@
+var firebaseConfig = {
+    apiKey: "AIzaSyDXKAkvjpRIw0QvoG3l-QfqdN10rIs0-_0",
+    authDomain: "time-capsule-1.firebaseapp.com",
+    databaseURL: "https://time-capsule-1-default-rtdb.firebaseio.com",
+    projectId: "time-capsule-1",
+    storageBucket: "time-capsule-1.appspot.com",
+    messagingSenderId: "775954139303",
+    appId: "1:775954139303:web:913fd1e3454d4e4e82b382"
+    };
+  
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 var database = firebase.database();
 
 const problem = document.getElementById("reportProblem");

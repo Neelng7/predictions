@@ -1,7 +1,7 @@
 var database = firebase.database();
 
 var upload_date, upload_time, dbUploadTimezone;
-var Rtime, release_date, dbtimeZone, prediction;
+var Rtime, release_date, dbtimeZone, prediction, dataValues;
 const firstName_check = document.getElementById("fname_check");
 const lastName_check = document.getElementById("lname_check");
 const username_check = document.getElementById("username_check");
@@ -41,17 +41,16 @@ function viewing(){
 
     var databaseRef  = database.ref('/users/'+ "UserId: "+username_check.value+'/'+"first_name:"+
     firstName_check.value.toLowerCase()+'/'+'last_name:'+lastName_check.value.toLowerCase());
-    databaseRef.once("value",(data) => {
-        databaseVal = data.val();
-        const dataValues = Object.entries(databaseVal);
+    databaseRef.on("value",(data) => {
+        dataValues = data.val();
 
-        globalThis.prediction = dataValues[1][1];
-        rdateStr = dataValues[2][1];
-        rtimeStr = dataValues[3][1];
-        dbtimeZone = dataValues[5][1];
-        dbUploadTimezone = dataValues[6][1];
-        upload_date =  dataValues[7][1];
-        upload_time = dataValues[8][1];
+        prediction = dataValues.prediction;
+        rdateStr = dataValues.release_date;
+        rtimeStr = dataValues.release_time;
+        dbtimeZone = dataValues.timezone;
+        dbUploadTimezone = dataValues.uploadTimezone;
+        upload_date = dataValues.upload_date;
+        upload_time = dataValues.upload_time;
 
     changeTimezone(upload_date, upload_time, dbUploadTimezone);
 
