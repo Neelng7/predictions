@@ -52,7 +52,7 @@ function passwordVerify(){
 }
 
 document.addEventListener('keydown', (keydown) => {
-    if(keydown.key == "Enter") verifyData();
+    if(keydown.key == "Enter" && lastName == document.activeElement) verifyData();
 });
 
 function verifyData(){

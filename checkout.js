@@ -114,7 +114,7 @@ function viewing(){
 }
 
 document.addEventListener('keydown', (keydown) => {
-    if(keydown.key == "Enter") verify();
+    if(keydown.key == "Enter" && lastName_check == document.activeElement) verify();
 });
 
 function verify(){

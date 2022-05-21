@@ -72,7 +72,7 @@ confirmUsernameRef.once("value",function(data){
 }
 
 document.addEventListener('keydown', (keydown) => {
-  if(keydown.key == "Enter") verifyInfo();
+  if(keydown.key == "Enter" && publicTags == document.activeElement) verifyInfo();
 });
 
 function verifyInfo(){
