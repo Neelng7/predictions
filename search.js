@@ -160,7 +160,7 @@ if(confirm("Open Prediction?")){
     var updatedbusername = value.children[3].textContent.slice(10,);
     var updatedbName = value.children[4].textContent.slice(6,).split(" ");
     
-    window.location.href = "?" + updatedbusername +"+"+ updatedbName[0] +"+"+ updatedbName[1];
+    window.location.href = "/?" + updatedbusername +"+"+ updatedbName[0] +"+"+ updatedbName[1];
     }
 })
 }}
