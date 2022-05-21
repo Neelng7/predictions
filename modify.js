@@ -225,13 +225,14 @@ function showPassword(){
     else passModify.type = "password";    
 }
 
-if(window.location.href.includes("+")){
-    const urlInfo = ((window.location.href.split("?"))[1]).split("+");
-    username.value = urlInfo[0];
-    firstName.value = urlInfo[1];
-    lastName.value = urlInfo[2];
-    if(urlInfo.length == 4){
-        passwordModify.value = urlInfo[3];
+const URLparameters = new URLSearchParams(window.location.search);
+if(URLparameters.has('user')){
+    username.value = URLparameters.get('user');
+    const nameParam = URLparameters.get('name').split(" ")
+    firstName.value = nameParam[0];
+    lastName.value = nameParam.slice(1,).join(" ");
+    if(URLparameters.has('password')){
+        passwordModify.value = URLparameters.get("password");
         modifyData();
     }else passwordModify.focus();
 }

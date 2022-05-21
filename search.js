@@ -158,9 +158,9 @@ if(confirm("Open Prediction?")){
     
     if(index == predictIndex){
     var updatedbusername = value.children[3].textContent.slice(10,);
-    var updatedbName = value.children[4].textContent.slice(6,).split(" ");
+    var updatedbName = value.children[4].textContent.slice(6,);
     
-    window.location.href = "/?" + updatedbusername +"+"+ updatedbName[0] +"+"+ updatedbName[1];
+    window.location.href = `/?user=${updatedbusername}&name=${updatedbName}`
     }
 })
 }}

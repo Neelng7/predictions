@@ -136,14 +136,15 @@ function verify(){
 }
 
 function signInUser(){
-    window.location.href = "modify-prediction?" + username_check.value +"+"+ firstName_check.value +"+"+ lastName_check.value;
+    window.location.href = `/modify-prediction?user=${username_check.value}&name=${firstName_check.value} ${lastName_check.value}`;
 }
 
-if(window.location.href.includes("+")){
-    const urlInfo = (((window.location.href.split("?"))[1]).split("+"));
-    username_check.value = urlInfo[0];
-    firstName_check.value = urlInfo[1];
-    lastName_check.value = urlInfo[2];
+const URLparameters = new URLSearchParams(window.location.search);
+if(URLparameters.has('user')){
+    username_check.value = URLparameters.get('user');
+    const nameParam = URLparameters.get('name').split(" ")
+    firstName_check.value = nameParam[0];
+    lastName_check.value = nameParam.slice(1,).join(" ");
     viewing();
 }
 
