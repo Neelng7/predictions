@@ -50,7 +50,7 @@ textarea{
     resize: vertical;
 }
 textarea:disabled{
-    color: rgb(20, 20, 20);
+    color: rgb(20, 20, 20) !important;
 }
 #date, .pointer{
     cursor: pointer;
