@@ -115,8 +115,7 @@ function showPassword(eyeID, inputID){
   document.getElementById(eyeID).classList.toggle("fa-eye");
   document.getElementById(eyeID).classList.toggle("fa-eye-slash");
   const passModify = document.getElementById(inputID);
-  if (passModify.type === "password") passModify.type = "text";
-  else passModify.type = "password";    
+  passModify.type = passModify.type == "password" ? "text" : "password"; 
 }
 
 resizePage();

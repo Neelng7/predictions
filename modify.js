@@ -219,10 +219,8 @@ function predictionDelete(){
 function showPassword(){
     document.getElementById("showPassword").classList.toggle("fa-eye");
     document.getElementById("showPassword").classList.toggle("fa-eye-slash");
-
     const passModify = document.getElementById("pass_modify");
-    if (passModify.type === "password") passModify.type = "text";
-    else passModify.type = "password";    
+    passModify.type = passModify.type == "password" ? "text" : "password";
 }
 
 const URLparameters = new URLSearchParams(window.location.search);
